@@ -36,12 +36,12 @@ class Nlcglib(CMakePackage, CudaPackage, ROCmPackage):
         values=("Debug", "Release", "RelWithDebInfo"),
     )
 
-    with when("@1.1: +cuda"):
-        variant(
-            "gpu_direct",
-            default=False,
-            description="Enable GPU direct. Required to support distributed wave-functions.",
-        )
+    variant(
+        "gpu_direct",
+        default=False,
+        description="Enable GPU direct. Required to support distributed wave-functions.",
+    )
+
 
     depends_on("cxx", type="build")  # generated
 
@@ -62,10 +62,11 @@ class Nlcglib(CMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("googletest", type="build", when="+tests")
     depends_on("nlohmann-json")
-    depends_on("kokkos@4:", when="@1.1:")
+    depends_on("kokkos+serial@4:", when="@1.1:")
 
     # MKLConfig.cmake introduced in 2021.3
     conflicts("intel-oneapi-mkl@:2021.2", when="^intel-oneapi-mkl")
+    conflicts("+gpu_direct", when="~rocm~cuda")
 
     with when("@:0.9"):
         conflicts("+rocm")
