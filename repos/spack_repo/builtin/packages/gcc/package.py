@@ -573,6 +573,7 @@ class Gcc(AutotoolsPackage, GNUMirrorPackage, CompilerPackage):
         when="@6.5.0,7.4.0:7.5.0,8.2.0:9.3.0",
     )
     patch("patch-745dae5923aba02982563481d75a21595df22ff8.patch", when="@10.1.0:10.3.0,11.1.0")
+    patch("0001-libsanitizer-Fix-build-with-glibc-2.42.patch", when="@14.3.0")
 
     # Backport libsanitizer patch for glibc >= 2.36
     # https://reviews.llvm.org/D129471
