@@ -69,6 +69,11 @@ class PyScipy(PythonPackage):
 
     # Build dependencies (do not include upper bound unless known issues)
     with default_args(type="build"):
+        # from meson.build
+        depends_on("meson@1.5:", when="@1.15:")
+        depends_on("meson@1.1:", when="@1.11:")
+        depends_on("meson@0.64:")
+        # from pyproject.toml
         depends_on("py-meson-python@0.15:", when="@1.12:")
         depends_on("py-meson-python@0.12.1:", when="@1.11:")
         depends_on("py-meson-python@0.11:", when="@1.10:")
@@ -222,7 +227,6 @@ class PyScipy(PythonPackage):
 
         return {
             "builddir": "build",
-            "compile-args": f"-j{make_jobs}",
             "setup-args": {
                 # http://scipy.github.io/devdocs/building/blas_lapack.html
                 "-Dfortran_std": fortran_std,
