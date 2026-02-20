@@ -80,7 +80,7 @@ class Nlcglib(CMakePackage, CudaPackage, ROCmPackage):
         depends_on("rocsolver")
 
     with when("+cuda"):
-        depends_on("kokkos+cuda_lambda+wrapper", when="%gcc")
+        depends_on("kokkos+wrapper", when="%gcc")
         depends_on("kokkos+cuda")
         for arch in CudaPackage.cuda_arch_values:
             depends_on(f"kokkos cuda_arch={arch}", when=f"cuda_arch={arch}")
