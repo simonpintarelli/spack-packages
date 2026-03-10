@@ -127,7 +127,7 @@ class PyNumpy(PythonPackage):
     with default_args(type="build"):
         depends_on("py-pyproject-metadata@0.7.1:", when="@1.26.0:1.26.3")
         depends_on("py-tomli@1:", when="@1.26.0:1.26.3 ^python@:3.10")
-        depends_on("py-setuptools@60:", when="@1.26.0:1.26.3 ^python@3.12:")
+        depends_on("py-setuptools@60:67", when="@1.26.0:1.26.3 ^python@3.12:")
         depends_on("py-colorama", when="@1.26.0:1.26.3 platform=windows")
         depends_on("ninja@1.8.2:", when="@1.26.0:1.26.3")
         depends_on("pkgconfig", when="@1.26.0:1.26.3")
@@ -300,8 +300,17 @@ class PyNumpy(PythonPackage):
         if spec["lapack"].name in ["intel-mkl", "intel-parallel-studio", "intel-oneapi-mkl"]:
             lapack = self._blas_lapack_pkg_config_mkl(spec["lapack"])
 
-        if spec["blas"].name in ["blis", "amdblis"]:
+        if spec["blas"].name == "blis":
             blas = "blis"
+
+        # Handle AMD BLIS: use multithreaded pkg-config name for @5.1: when threading is enabled
+        if spec["blas"].name == "amdblis":
+            blas = "blis"
+            if spec["amdblis"].satisfies("@5.1:") and (
+                spec["amdblis"].satisfies("threads=openmp")
+                or spec["amdblis"].satisfies("threads=pthreads")
+            ):
+                blas = "blis-mt"
 
         if spec["blas"].name == "cray-libsci":
             blas = "libsci"
