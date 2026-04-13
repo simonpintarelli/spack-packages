@@ -7,10 +7,10 @@ Subject: [PATCH] missing include
  src/emitterutils.cpp | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/src/emitterutils.cpp b/src/emitterutils.cpp
+diff --git a/projects/rocprofiler-sdk/external/yaml-cpp/src/emitterutils.cpp b/projects/rocprofiler-sdk/external/yaml-cpp/src/emitterutils.cpp
 index fc41011..21780f3 100644
---- a/src/emitterutils.cpp
-+++ b/src/emitterutils.cpp
+--- a/projects/rocprofiler-sdk/external/yaml-cpp/src/emitterutils.cpp
++++ b/projects/rocprofiler-sdk/external/yaml-cpp/src/emitterutils.cpp
 @@ -1,6 +1,7 @@
  #include <algorithm>
  #include <iomanip>
