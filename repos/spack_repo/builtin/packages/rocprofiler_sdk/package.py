@@ -39,6 +39,12 @@ class RocprofilerSdk(CMakePackage):
 
     license("MIT")
     version(
+        "7.2.1",
+        tag="rocm-7.2.1",
+        commit="e1a6bc5663304b9c586b3254b8920f2981057804",
+        submodules=submodules,
+    )
+    version(
         "7.2.0",
         tag="rocm-7.2.0",
         commit="fc0010cf6a5a972d42b276df946510f30343d493",
@@ -152,7 +158,7 @@ class RocprofilerSdk(CMakePackage):
 
     for ver in ["6.2.4", "6.3.0", "6.3.1", "6.3.2", "6.3.3", "6.4.0", "6.4.1", "6.4.2", "6.4.3"]:
         depends_on(f"aqlprofile@{ver}", when=f"@{ver}")
-    for ver in ["7.0.0", "7.0.2", "7.1.0", "7.1.1", "7.2.0"]:
+    for ver in ["7.0.0", "7.0.2", "7.1.0", "7.1.1", "7.2.0", "7.2.1"]:
         depends_on(f"hsa-amd-aqlprofile@{ver}", when=f"@{ver}")
 
     for ver in [
@@ -170,13 +176,14 @@ class RocprofilerSdk(CMakePackage):
         "7.1.0",
         "7.1.1",
         "7.2.0",
+        "7.2.1"
     ]:
         depends_on(f"hip@{ver}", when=f"@{ver}")
         depends_on(f"rocm-cmake@{ver}", when=f"@{ver}")
         depends_on(f"rccl@{ver}", when=f"@{ver}")
         depends_on(f"rocprofiler-register@{ver}", when=f"@{ver}")
 
-    for ver in ["6.4.0", "6.4.1", "6.4.2", "6.4.3", "7.0.0", "7.0.2", "7.1.0", "7.1.1", "7.2.0"]:
+    for ver in ["6.4.0", "6.4.1", "6.4.2", "6.4.3", "7.0.0", "7.0.2", "7.1.0", "7.1.1", "7.2.0", "7.2.1"]:
         depends_on(f"rocdecode@{ver}", when=f"@{ver}")
 
     patch(
@@ -184,6 +191,8 @@ class RocprofilerSdk(CMakePackage):
         sha256="05a71386d12d7fc98a40c025dc65a804556e01f381d1101ea244f35f29edd3d8",
         when="@7.2:",
     )
+
+    patch("0001-missing-include.patch", when="@7.2.1")
 
     @property
     def root_cmakelists_dir(self):
