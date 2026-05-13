@@ -192,7 +192,9 @@ class RocprofilerSdk(CMakePackage):
         when="@7.2:",
     )
 
-    patch("0001-missing-include.patch", when="@7.2.1")
+    patch("0001-missing-include.patch",
+          sha256="48e991fb045bb77d076e077e3b799d22a2040a09908f8d8103aebb68e0e633dc",
+          when="@7.2.1")
 
     @property
     def root_cmakelists_dir(self):
